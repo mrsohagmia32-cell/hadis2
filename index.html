@@ -3,38 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ডাটাবেজ ছাড়া এসইও ফ্রেন্ডলি ব্লগ সাইট</title>
+    <title>ইসলামী জীবন পরিচালনা</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body { background: #f4f6f9; color: #333; line-height: 1.6; }
-        header { background: #2c3e50; color: #fff; padding: 20px; text-align: center; }
-        nav { background: #34495e; padding: 10px; text-align: center; }
-        nav button { background: none; border: none; color: white; font-size: 16px; cursor: pointer; margin: 0 15px; padding: 5px 10px; border-radius: 4px; }
-        nav button:hover, nav button.active { background: #2c3e50; }
+        header { background: #1b4d3e; color: #fff; padding: 25px; text-align: center; }
+        header h1 { font-size: 28px; margin-bottom: 5px; }
+        header p { font-size: 14px; color: #d1e7dd; }
+        nav { background: #276749; padding: 10px; text-align: center; }
+        nav button { background: none; border: none; color: white; font-size: 16px; cursor: pointer; margin: 0 15px; padding: 6px 15px; border-radius: 4px; }
+        nav button:hover, nav button.active { background: #1b4d3e; }
         .container { max-width: 800px; margin: 20px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .hidden { display: none; }
         
-        /* Post Card */
         .post-card { border-bottom: 1px solid #eee; padding: 20px 0; margin-bottom: 20px; }
-        .post-card h3 a { color: #2c3e50; text-decoration: none; }
+        .post-card h3 a { color: #1b4d3e; text-decoration: none; }
         .post-card h3 a:hover { text-decoration: underline; }
         .post-date { font-size: 12px; color: #888; margin-bottom: 10px; }
-        .read-more { display: inline-block; margin-top: 10px; color: #3498db; text-decoration: none; font-weight: bold; }
+        .read-more { display: inline-block; margin-top: 10px; color: #276749; text-decoration: none; font-weight: bold; }
         
-        /* Form Styling */
         input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
-        textarea { height: 150px; resize: vertical; }
-        button.submit-btn { background: #27ae60; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 4px; cursor: pointer; }
-        button.submit-btn:hover { background: #219653; }
-        .loading { color: #e67e22; font-weight: bold; margin-top: 10px; }
-        .back-btn { display: inline-block; margin-bottom: 15px; color: #e74c3c; text-decoration: none; font-weight: bold; cursor: pointer; }
+        textarea { height: 180px; resize: vertical; }
+        button.submit-btn { background: #276749; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 4px; cursor: pointer; width: 100%; }
+        button.submit-btn:hover { background: #1b4d3e; }
+        .secondary-btn { background: #e53e3e; color: white; border: none; padding: 8px 15px; font-size: 14px; border-radius: 4px; cursor: pointer; margin-bottom: 15px; }
+        .secondary-btn:hover { background: #c53030; }
+        .loading { color: #d69e2e; font-weight: bold; margin-top: 10px; }
+        .back-btn { display: inline-block; margin-bottom: 15px; color: #e53e3e; text-decoration: none; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 id="site-title">আমার ব্লগ সাইট</h1>
-        <p>GitHub চালিত এসইও ফ্রেন্ডলি ব্লগ</p>
+        <h1>ইসলামী জীবন পরিচালনা</h1>
+        <p>কুরআন ও সুন্নাহ ভিত্তিক জীবন গড়ার দিকনির্দেশনা</p>
     </header>
 
     <nav>
@@ -42,18 +43,15 @@
         <button onclick="navigate('admin')" id="nav-admin">এডমিন প্যানেল</button>
     </nav>
 
-    <div class="container" id="main-container">
-        <!-- ডায়নামিক কন্টেন্ট এখানে লোড হবে -->
-    </div>
+    <div class="container" id="main-container"></div>
 
     <script>
-        // ======= কনফিগারেশন সেটিংস =======
+        // ======= কনফিগারেশন =======
         const GITHUB_USERNAME = "mrsohagmia32-cell"; 
         const REPO_NAME = "hadis2"; 
-        const GITHUB_TOKEN = "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"; 
         const FILE_PATH = "posts.json"; 
-        const ADMIN_PASS = "Sa28747228@"; // এডমিন প্যানেলের পাসওয়ার্ড
-        // ===================================
+        const ADMIN_PASS = "Sa28747228@"; // আপনার দেওয়া এডমিন পাসওয়ার্ড
+        // ===========================
 
         function router() {
             const hash = window.location.hash;
@@ -74,13 +72,12 @@
 
         window.addEventListener('hashchange', router);
 
-        // পাসওয়ার্ড চেক করার ফাংশন
         function checkAdminAuth() {
             let userPass = prompt("এডমিন প্যানেলে প্রবেশ করতে পাসওয়ার্ড দিন:");
             if (userPass === ADMIN_PASS) {
                 showAdminPanel();
             } else {
-                alert("ভুল পাসওয়ার্ড! হোমপেজে ফিরিয়ে নেওয়া হচ্ছে।");
+                alert("ভুল পাসওয়ার্ড!");
                 navigate('home');
             }
         }
@@ -88,7 +85,7 @@
         async function loadHomePosts() {
             setActiveNav('home');
             const container = document.getElementById('main-container');
-            container.innerHTML = "<h2>সাম্প্রতিক পোস্টসমূহ</h2><div id='posts-container'>পোস্ট লোড হচ্ছে...</div>";
+            container.innerHTML = "<h2>সাম্প্রতিক আলোচনা ও পোস্টসমূহ</h2><div id='posts-container'>পোস্ট লোড হচ্ছে...</div>";
             const postsContainer = document.getElementById('posts-container');
 
             const url = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${REPO_NAME}/main/${FILE_PATH}?t=${new Date().getTime()}`;
@@ -96,7 +93,7 @@
             try {
                 let response = await fetch(url);
                 if (!response.ok) {
-                    postsContainer.innerHTML = "<p>এখনো কোনো পোস্ট করা হয়নি অথবা posts.json ফাইলটি পাওয়া যায়নি।</p>";
+                    postsContainer.innerHTML = "<p>এখনো কোনো পোস্ট করা হয়নি।</p>";
                     return;
                 }
                 let posts = await response.json();
@@ -112,9 +109,9 @@
                     postsContainer.innerHTML += `
                         <div class="post-card">
                             <h3><a href="#post/${originalIndex}">${escapeHTML(post.title)}</a></h3>
-                            <div class="post-date">তারিখ: ${post.date}</div>
+                            <div class="post-date">প্রকাশিত: ${post.date}</div>
                             <p>${escapeHTML(post.content.substring(0, 150))}...</p>
-                            <a href="#post/${originalIndex}" class="read-more">বিস্তারিত পড়ুন...</a>
+                            <a href="#post/${originalIndex}" class="read-more">পূর্ণাঙ্গ পড়ুন →</a>
                         </div>
                     `;
                 });
@@ -136,12 +133,12 @@
                 
                 if (posts[index]) {
                     let post = posts[index];
-                    document.title = post.title + " - ব্লগ সাইট";
+                    document.title = post.title + " - ইসলামী জীবন পরিচালনা";
                     container.innerHTML = `
                         <a class="back-btn" href="#" onclick="navigate('home'); return false;">← সব পোস্ট দেখুন</a>
                         <div class="post-card" style="border:none;">
-                            <h2 style="color: #2c3e50; margin-bottom: 10px;">${escapeHTML(post.title)}</h2>
-                            <div class="post-date">তারিখ: ${post.date}</div>
+                            <h2 style="color: #1b4d3e; margin-bottom: 10px;">${escapeHTML(post.title)}</h2>
+                            <div class="post-date">প্রকাশিত: ${post.date}</div>
                             <hr style="margin: 15px 0; border:0; border-top:1px solid #eee;">
                             <p style="font-size: 16px; white-space: pre-line;">${escapeHTML(post.content)}</p>
                         </div>
@@ -157,15 +154,44 @@
         function showAdminPanel() {
             setActiveNav('admin');
             const container = document.getElementById('main-container');
-            container.innerHTML = `
-                <h2>নতুন পোস্ট তৈরি করুন</h2>
-                <p style="font-size: 13px; color: #666; margin-bottom: 15px;">এখানে পোস্ট করলে সরাসরি আপনার GitHub রিপোজিটরিতে সেভ হয়ে যাবে।</p>
-                
-                <input type="text" id="post-title" placeholder="পোস্টের শিরোনাম দিন...">
-                <textarea id="post-content" placeholder="আপনার পোস্টের মূল লেখা এখানে লিখুন..."></textarea>
-                <button class="submit-btn" onclick="publishPost()">পোস্ট পাবলিশ করুন</button>
-                <div id="status-msg" class="loading"></div>
-            `;
+            let savedToken = localStorage.getItem('github_token') || '';
+
+            if (!savedToken) {
+                container.innerHTML = `
+                    <h2>গিটহাব টোকেন সেটআপ</h2>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 15px;">আপনার ব্রাউজারে টোকেন সেভ করা নেই। নিচে আপনার GitHub Personal Access Token দিন:</p>
+                    <input type="password" id="token-input" placeholder="টোকেন এখানে পেস্ট করুন...">
+                    <button class="submit-btn" onclick="saveToken()">টোকেন সেভ করুন</button>
+                `;
+            } else {
+                container.innerHTML = `
+                    <h2>নতুন পোস্ট তৈরি করুন</h2>
+                    <button class="secondary-btn" onclick="clearToken()">টোকেন পরিবর্তন করুন</button>
+                    
+                    <input type="text" id="post-title" placeholder="পোস্টের শিরোনাম...">
+                    <textarea id="post-content" placeholder="আপনার লেখার মূল অংশ এখানে লিখুন..."></textarea>
+                    <button class="submit-btn" onclick="publishPost()">পোস্ট পাবলিশ করুন</button>
+                    <div id="status-msg" class="loading"></div>
+                `;
+            }
+        }
+
+        function saveToken() {
+            let token = document.getElementById('token-input').value.trim();
+            if (!token) {
+                alert("দয়া করে টোকেন দিন!");
+                return;
+            }
+            localStorage.setItem('github_token', token);
+            alert("টোকেন সফলভাবে সেভ হয়েছে!");
+            showAdminPanel();
+        }
+
+        function clearToken() {
+            if (confirm("টোকেন পরিবর্তন করতে চান?")) {
+                localStorage.removeItem('github_token');
+                showAdminPanel();
+            }
         }
 
         function setActiveNav(tab) {
@@ -176,16 +202,22 @@
         }
 
         async function publishPost() {
+            let token = localStorage.getItem('github_token');
             let title = document.getElementById('post-title').value.trim();
             let content = document.getElementById('post-content').value.trim();
             let msgBox = document.getElementById('status-msg');
 
-            if(!title || !content) {
-                alert("দয়া করে শিরোনাম এবং লেখা উভয়ই পূরণ করুন!");
+            if(!token) {
+                alert("টোকেন পাওয়া যায়নি!");
                 return;
             }
 
-            msgBox.innerHTML = "পোস্ট পাবলিশ হচ্ছে, দয়া করে অপেক্ষা করুন...";
+            if(!title || !content) {
+                alert("শিরোনাম এবং লেখা উভয়ই পূরণ করুন!");
+                return;
+            }
+
+            msgBox.innerHTML = "পোস্ট পাবলিশ হচ্ছে...";
 
             const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
 
@@ -194,7 +226,7 @@
                 let posts = [];
 
                 let res = await fetch(apiUrl, {
-                    headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
+                    headers: { 'Authorization': `token ${token}` }
                 });
 
                 if (res.ok) {
@@ -216,7 +248,7 @@
                 let updateRes = await fetch(apiUrl, {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Authorization': `token ${token}`,
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
