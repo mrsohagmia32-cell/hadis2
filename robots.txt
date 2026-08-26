@@ -3,3 +3,4 @@ Allow: /
 Disallow: /admin/
 
 Sitemap: https://hadis2.duckdns.org/sitemap.xml
+Sitemap: https://hadis2.duckdns.org/atom.xml?redirect=false&start-index=1&max-results=500
